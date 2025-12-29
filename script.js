@@ -38,6 +38,9 @@ const adminLogoutBtn = document.getElementById('adminLogoutBtn');
 let isAdminView = false;
 let isAdminLoggedIn = false;
 
+// Hide add resource button initially
+addResourceBtn.style.display = 'none';
+
 function updateStats() {
     const total = resources.length;
     const occupiedCount = bookings.length;
@@ -447,22 +450,29 @@ function checkAdminLogin() {
     }
 }
 
+const ADMIN_PASSWORD = 'admin123'; // Hardcoded for demonstration
+
 adminLoginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('adminName').value;
     const email = document.getElementById('adminEmail').value;
     const password = document.getElementById('adminPassword').value;
 
-    // For demonstration, any non-empty input is accepted
-    if (name && email && password) {
+    if (password === ADMIN_PASSWORD) {
         isAdminLoggedIn = true;
         alert(`Welcome Admin ${name}!`);
         checkAdminLogin();
+        // Show add resource button only when logged in
+        addResourceBtn.style.display = 'inline-block';
+    } else {
+        alert("Lectures can only access");
+        adminLoginForm.reset();
     }
 });
 
 adminLogoutBtn.addEventListener('click', () => {
     isAdminLoggedIn = false;
+    addResourceBtn.style.display = 'none';
     alert('Logged out from Admin Panel');
     checkAdminLogin();
 });
