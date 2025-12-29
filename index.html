@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Resource Dashboard | Nexus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="overlay"></div>
+
+    <!-- Landing Page -->
+    <section id="landingPage" class="landing-page">
+        <div class="landing-content">
+            <h1 class="welcome-text">WELCOME</h1>
+            <p class="sub-text">To the Future of Campus Resource Management</p>
+            <button id="enterBtn" class="enter-btn">GET STARTED</button>
+        </div>
+    </section>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="container" style="display: none; opacity: 0;">
+        <header>
+            <div class="logo">
+                <h1>NEXUS CAMPUS</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="resourceSearch" placeholder="Search resources (e.g. Lab 101)...">
+                <button id="addResourceBtn" class="add-res-btn">+ Add Resource</button>
+                <button id="toggleAdminBtn" class="add-res-btn" style="background: var(--primary-color);">Admin
+                    View</button>
+            </div>
+        </header>
+
+        <!-- Resource Insights -->
+        <section id="resourceStats" class="resource-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalResources">0</div>
+                <div class="stat-label">Total Resources</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="availableNow">0</div>
+                <div class="stat-label">Available Now</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgUtilization">0%</div>
+                <div class="stat-label">Avg. Utilization</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="activeBookings">0</div>
+                <div class="stat-label">Active Bookings</div>
+            </div>
+        </section>
+
+        <section class="controls">
+            <div class="filters" id="resourceFilters">
+                <button class="filter-btn active" data-filter="all">All Resources</button>
+                <button class="filter-btn" data-filter="classroom">Classrooms</button>
+                <button class="filter-btn" data-filter="lab">Labs</button>
+                <button class="filter-btn" data-filter="projector">Projectors</button>
+                <button class="filter-btn guidance-btn" data-filter="recommend">✨ Recommended</button>
+            </div>
+        </section>
+
+        <main class="resource-grid" id="resourceGrid">
+            <!-- Resources will be dynamically populated here -->
+        </main>
+
+        </section>
+
+        <!-- Admin Panel (Hidden by default) -->
+        <section id="adminPanel" class="admin-panel" style="display: none;">
+            <div id="adminAuthSection">
+                <div class="section-header">
+                    <h2>ADMIN LOGIN</h2>
+                </div>
+                <form id="adminLoginForm" class="admin-login-form">
+                    <div class="form-group">
+                        <label for="adminName">Admin Name</label>
+                        <input type="text" id="adminName" required placeholder="Enter admin name">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminEmail">Admin Email</label>
+                        <input type="email" id="adminEmail" required placeholder="admin@nexus.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Password</label>
+                        <input type="password" id="adminPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="submit-btn" style="margin-top: 1rem;">LOGIN</button>
+                </form>
+            </div>
+
+            <div id="adminContentSection" style="display: none;">
+                <div class="section-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <h2>PENDING REQUESTS (ADMIN)</h2>
+                        <button id="adminLogoutBtn" class="action-btn delete-btn"
+                            style="padding: 0.5rem 1rem;">LOGOUT</button>
+                    </div>
+                </div>
+                <div class="bookings-grid" id="adminRequestsGrid">
+                    <!-- Admin requests will be dynamically populated here -->
+                    <div class="empty-bookings">
+                        <p>No pending requests.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="user-bookings" id="userBookingsSection">
+            <div class="section-header">
+                <h2>MY BOOKINGS</h2>
+            </div>
+            <div class="bookings-grid" id="bookingsGrid">
+                <!-- Bookings will be dynamically populated here -->
+                <div class="empty-bookings">
+                    <p>No active bookings. Choose a resource above to get started.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modalTitle">BOOK RESOURCE</h2>
+            <form id="bookingForm">
+                <input type="hidden" id="bookingId">
+                <input type="hidden" id="resourceId">
+
+                <div class="form-group">
+                    <label for="resName">Resource</label>
+                    <input type="text" id="resName" readonly>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookingDate">Date</label>
+                        <input type="date" id="bookingDate" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startTime">Start Time</label>
+                        <input type="time" id="startTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">End Time</label>
+                        <input type="time" id="endTime" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="purpose">Purpose</label>
+                    <textarea id="purpose" placeholder="e.g. Study group, Research meeting..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">CONFIRM BOOKING</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resource Management Modal -->
+    <div id="resourceModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeResourceModal()">&times;</span>
+            <h2 id="resModalTitle">ADD RESOURCE</h2>
+            <form id="resourceForm">
+                <input type="hidden" id="editResId">
+                <div class="form-group">
+                    <label for="newResName">Resource Name</label>
+                    <input type="text" id="newResName" required placeholder="e.g. Physics Lab 3">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="newResType">Type</label>
+                        <select id="newResType" required
+                            style="width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 0.8rem 1rem; border-radius: 12px; color: var(--text-main);">
+                            <option value="classroom">Classroom</option>
+                            <option value="lab">Lab</option>
+                            <option value="projector">Projector</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="newResCapacity">Capacity</label>
+                        <input type="number" id="newResCapacity" required min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="newResAttended">Attended Students</label>
+                        <input type="number" id="newResAttended" required min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="newResUtil">Utilization (%)</label>
+                        <input type="number" id="newResUtil" required min="0" max="100" value="0">
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" id="resSubmitBtn">SAVE RESOURCE</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
