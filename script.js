@@ -464,9 +464,8 @@ adminLoginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('adminEmail').value;
     const password = document.getElementById('adminPassword').value;
 
-    if (name === ADMIN_CREDS.name && email === ADMIN_CREDS.email && password === ADMIN_CREDS.password) {
+    if (name.toUpperCase() === ADMIN_CREDS.name && email.toLowerCase() === ADMIN_CREDS.email.toLowerCase() && password === ADMIN_CREDS.password) {
         isAdminLoggedIn = true;
-        alert(`Welcome Admin ${name}!`);
         checkAdminLogin();
         // Show add resource button and refresh grid for management icons
         addResourceBtn.style.display = 'inline-block';
