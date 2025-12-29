@@ -460,9 +460,9 @@ const ADMIN_CREDS = {
 
 adminLoginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('adminName').value;
-    const email = document.getElementById('adminEmail').value;
-    const password = document.getElementById('adminPassword').value;
+    const name = document.getElementById('adminName').value.trim();
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value.trim();
 
     if (name.toUpperCase() === ADMIN_CREDS.name && email.toLowerCase() === ADMIN_CREDS.email.toLowerCase() && password === ADMIN_CREDS.password) {
         isAdminLoggedIn = true;
