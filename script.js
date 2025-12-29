@@ -452,7 +452,11 @@ function checkAdminLogin() {
     }
 }
 
-const ADMIN_PASSWORD = 'admin123'; // Hardcoded for demonstration
+const ADMIN_CREDS = {
+    name: 'SJECT',
+    email: 'sjcet@gmail.com',
+    password: '1234'
+};
 
 adminLoginForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -460,7 +464,7 @@ adminLoginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('adminEmail').value;
     const password = document.getElementById('adminPassword').value;
 
-    if (password === ADMIN_PASSWORD) {
+    if (name === ADMIN_CREDS.name && email === ADMIN_CREDS.email && password === ADMIN_CREDS.password) {
         isAdminLoggedIn = true;
         alert(`Welcome Admin ${name}!`);
         checkAdminLogin();
