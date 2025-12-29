@@ -29,7 +29,7 @@
             <div class="search-bar">
                 <input type="text" id="resourceSearch" placeholder="Search resources (e.g. Lab 101)...">
                 <button id="addResourceBtn" class="add-res-btn">+ Add Resource</button>
-                <button id="toggleAdminBtn" class="add-res-btn" style="background: var(--primary-color);">Admin
+                <button id="toggleAdminBtn" class="add-res-btn" style="background: var(--primary-color);">🔒 Admin
                     View</button>
             </div>
         </header>
@@ -73,7 +73,9 @@
         <!-- Admin Panel (Hidden by default) -->
         <section id="adminPanel" class="admin-panel" style="display: none;">
             <div id="adminAuthSection">
-                <div class="section-header">
+                <div class="section-header"
+                    style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                    <div style="font-size: 3rem; filter: saturate(0.5);">🔐</div>
                     <h2>ADMIN LOGIN</h2>
                 </div>
                 <form id="adminLoginForm" class="admin-login-form">

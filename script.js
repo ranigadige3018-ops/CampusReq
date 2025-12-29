@@ -91,10 +91,12 @@ function renderResources(items) {
         card.style.animationDelay = `${index * 0.1}s`;
 
         card.innerHTML = `
+            ${isAdminLoggedIn ? `
             <div class="card-management">
                 <button class="mgmt-btn" onclick="editResource(${item.id})">✏️</button>
                 <button class="mgmt-btn del" onclick="deleteResource(${item.id})">🗑️</button>
             </div>
+            ` : ''}
             <div class="card-icon">${getIcon(item.type)}</div>
             <div class="card-type">${item.type}</div>
             <h2 class="card-title">${item.name}</h2>
@@ -431,11 +433,11 @@ toggleAdminBtn.addEventListener('click', () => {
     isAdminView = !isAdminView;
     if (isAdminView) {
         document.body.classList.add('admin-mode');
-        toggleAdminBtn.textContent = 'Exit Admin View';
+        toggleAdminBtn.innerHTML = '🔓 Exit Admin View';
         checkAdminLogin();
     } else {
         document.body.classList.remove('admin-mode');
-        toggleAdminBtn.textContent = 'Admin View';
+        toggleAdminBtn.innerHTML = '🔒 Admin View';
     }
 });
 
@@ -462,8 +464,9 @@ adminLoginForm.addEventListener('submit', (e) => {
         isAdminLoggedIn = true;
         alert(`Welcome Admin ${name}!`);
         checkAdminLogin();
-        // Show add resource button only when logged in
+        // Show add resource button and refresh grid for management icons
         addResourceBtn.style.display = 'inline-block';
+        renderResources(resources);
     } else {
         alert("Lectures can only access");
         adminLoginForm.reset();
@@ -475,6 +478,7 @@ adminLogoutBtn.addEventListener('click', () => {
     addResourceBtn.style.display = 'none';
     alert('Logged out from Admin Panel');
     checkAdminLogin();
+    renderResources(resources); // Standard users should not see management icons
 });
 
 // Initial render
